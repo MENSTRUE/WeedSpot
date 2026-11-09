@@ -1,0 +1,17 @@
+{
+  "architecture": "scratch compact UNet",
+  "seed": 42,
+  "sources": [
+    "CWFID 60 paired images",
+    "EWIS1 88 paired aerial images"
+  ],
+  "source_labels": "CWFID red crop/green weed; EWIS blue crop/orange weed/transparent background",
+  "image_size": 384,
+  "batch": 4,
+  "max_epochs": 40,
+  "best_epoch": 32,
+  "best_val_foreground_miou": 0.5772258034471679,
+  "selected_by": "validation foreground macro IoU only",
+  "checkpoint_sha256": "6380680aa33892dcdbe8b531d3642dca17434f2436717673fa6773fa07c22e7a",
+  "split_policy": "original image-level grouped heuristic; not guaranteed independent fields"
+}

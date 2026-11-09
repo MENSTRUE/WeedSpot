@@ -1,0 +1,40 @@
+{
+  "source_count": {
+    "CWFID": 60,
+    "EWIS1": 88
+  },
+  "class_names": [
+    "Background",
+    "Crop",
+    "Weed"
+  ],
+  "cwfid_rgb": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      255,
+      0,
+      0
+    ],
+    [
+      0,
+      255,
+      0
+    ]
+  ],
+  "ewis_rgb_crop": [
+    31,
+    119,
+    180
+  ],
+  "ewis_rgb_weed": [
+    255,
+    127,
+    14
+  ],
+  "unknown_fraction_max": 0.0,
+  "issues": []
+}

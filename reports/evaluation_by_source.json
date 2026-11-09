@@ -1,0 +1,48 @@
+{
+  "best_epoch": 32,
+  "validation": {
+    "CWFID": {
+      "tiles": 10,
+      "distinct_originals": 10,
+      "iou_background": 0.9912622513172101,
+      "iou_crop": 0.7923645975069988,
+      "iou_weed": 0.6149038249922972,
+      "macro_foreground_iou": 0.7036342112496481,
+      "pixel_accuracy": 0.9883687337239583,
+      "loss": 0.4444117724895477
+    },
+    "EWIS1": {
+      "tiles": 168,
+      "distinct_originals": 14,
+      "iou_background": 0.9917639866523167,
+      "iou_crop": 0.7050226492817805,
+      "iou_weed": 0.42014265658025335,
+      "macro_foreground_iou": 0.562582652931017,
+      "pixel_accuracy": 0.9903420746011078,
+      "loss": 0.41197955182620455
+    }
+  },
+  "test": {
+    "CWFID": {
+      "tiles": 10,
+      "distinct_originals": 10,
+      "iou_background": 0.9900775360758131,
+      "iou_crop": 0.745171375636869,
+      "iou_weed": 0.3409782829307895,
+      "macro_foreground_iou": 0.5430748292838292,
+      "pixel_accuracy": 0.983447265625,
+      "loss": 0.8978128671646118
+    },
+    "EWIS1": {
+      "tiles": 168,
+      "distinct_originals": 14,
+      "iou_background": 0.9872463766186594,
+      "iou_crop": 0.6476518550516901,
+      "iou_weed": 0.3984779996198221,
+      "macro_foreground_iou": 0.5230649273357562,
+      "pixel_accuracy": 0.9842491351738178,
+      "loss": 0.6183380704550516
+    }
+  },
+  "test_caveats": "small original image split; EWIS1 tiling; source/domain shift; grouping heuristic not field-independent"
+}

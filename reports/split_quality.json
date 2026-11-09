@@ -1,0 +1,18 @@
+{
+  "session_disjoint_EWIS1": true,
+  "EWIS1_distinct_sessions": 24,
+  "source_split_original_image_counts": {
+    "CWFID_test": 10,
+    "CWFID_train": 40,
+    "CWFID_val": 10,
+    "EWIS1_test": 14,
+    "EWIS1_train": 60,
+    "EWIS1_val": 14
+  },
+  "cross_split_SHA256_conflicts": 0,
+  "limitations": [
+    "CWFID contiguous filename blocks heuristic, not known site IDs",
+    "EWIS1 different days may use same fields",
+    "Small independent session sample"
+  ]
+}

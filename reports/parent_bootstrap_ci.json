@@ -1,0 +1,36 @@
+{
+  "CWFID": {
+    "n_independent_originals": 10,
+    "bootstrap_parent_resamples": 400,
+    "iou_crop_ci95": [
+      0.5894917294245197,
+      0.8086592545108309
+    ],
+    "iou_weed_ci95": [
+      0.1710229048335715,
+      0.5424225211082175
+    ],
+    "foreground_miou_ci95": [
+      0.42455924034777814,
+      0.659093926992554
+    ],
+    "test_field_independence": "Only session-disjoint EWIS1, not independently proven site-disjoint"
+  },
+  "EWIS1": {
+    "n_independent_originals": 14,
+    "bootstrap_parent_resamples": 400,
+    "iou_crop_ci95": [
+      0.5834928154271201,
+      0.7064542206781146
+    ],
+    "iou_weed_ci95": [
+      0.32229651926874436,
+      0.4582621912133261
+    ],
+    "foreground_miou_ci95": [
+      0.4784015579652651,
+      0.5692638128240023
+    ],
+    "test_field_independence": "Only session-disjoint EWIS1, not independently proven site-disjoint"
+  }
+}

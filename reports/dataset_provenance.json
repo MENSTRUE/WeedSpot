@@ -1,0 +1,23 @@
+{
+  "sources": [
+    {
+      "name": "CWFID",
+      "url": "https://github.com/cwfid/dataset",
+      "licence": "non-commercial research only",
+      "label": "crop=red, weed=green, black background; 60 paired images"
+    },
+    {
+      "name": "EWIS1",
+      "url": "https://data.mendeley.com/datasets/6j5pxgf437/1",
+      "label": "crop blue RGB 31,119,180; weed orange RGB 255,127,14; transparent background; 88 paired images"
+    }
+  ],
+  "kaggle_input": "/kaggle/input/datasets/wafabila/weedspot-dataset",
+  "audit_utc": "2026-11-08T10:31:30.444375+00:00",
+  "limits": [
+    "V3 uses 4x3 tiling for EWIS; small weeds may be lost in resize",
+    "group-by-session/filename is heuristic only; exact site-independent evaluation not established",
+    "different imaging domains; compare source-separated IoUs",
+    "no commercial authorization for CWFID"
+  ]
+}

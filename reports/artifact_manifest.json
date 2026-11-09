@@ -1,0 +1,14 @@
+{
+  "project": "WeedSpot Day35 V3 FINAL",
+  "checkpoint_sha256": "6380680aa33892dcdbe8b531d3642dca17434f2436717673fa6773fa07c22e7a",
+  "best_epoch": 32,
+  "best_validation_foreground_miou": 0.5772258034471679,
+  "split_policy": "EWIS1 location-date session held intact",
+  "ewis_tiles_per_original": 12,
+  "held_out_test_used_for_selection": false,
+  "limitations": [
+    "CWFID split source-site independence unknown",
+    "EWIS1 same location on different dates can overlap sites",
+    "New field test needed"
+  ]
+}
