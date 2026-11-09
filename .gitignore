@@ -1,0 +1,113 @@
+# ==========================================================
+# WeedSpot — Day 35
+# ==========================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+secrets.json
+
+# Jupyter
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# Kaggle
+kaggle.json
+
+# Node / Vite
+node_modules/
+frontend/dist/
+frontend/build/
+.next/
+.nuxt/
+coverage/
+.npm/
+*.tsbuildinfo
+
+# Logs
+*.log
+logs/
+
+# Raw datasets and archives
+datasets/
+dataset/
+data/raw/
+data/interim/
+data/processed/
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+
+# Raw ML data formats
+*.parquet
+*.arrow
+*.feather
+*.h5
+*.hdf5
+*.tfrecord
+*.tfrecords
+
+# Model binaries
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.tflite
+*.pb
+*.joblib
+*.pkl
+
+# Generated caches and training
+runs/
+wandb/
+mlruns/
+lightning_logs/
+tensorboard/
+checkpoints/
+weights/
+outputs/
+tmp/
+temp/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Keep empty directory placeholders
+!.gitkeep
