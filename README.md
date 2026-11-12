@@ -1,68 +1,129 @@
-# WeedSpot
+# WeedSpot 🌱
 
-**Day 35 — 100 Days of Projects**
+**Day 35 — 100 Days of Projects**  
+**Computer Vision · Precision Agriculture · Weed Detection & Segmentation**
 
-AI-powered weed detection for agricultural imagery.
+An AI-powered computer vision project exploring weed identification in agricultural imagery to support precision farming and automated field monitoring.
+
+> **Project Status:** In Progress — Model Inference & Integration
 
 ## Overview
 
-WeedSpot is a computer vision project focused on identifying
-weeds in agricultural images to support precision agriculture.
+WeedSpot aims to identify unwanted vegetation in agricultural images using computer vision and deep learning techniques.
 
-The project aims to help users identify unwanted vegetation
-and better understand potential weed presence in crop areas.
+The project explores how image-based AI can support farmers, researchers, and agricultural technology developers in detecting weeds and understanding their distribution within crop areas.
 
-## Problem
+WeedSpot is part of the **100 Days of Projects** initiative, focused on practical AI engineering, reproducible experimentation, and real-world problem solving.
 
-Weeds compete with crops for water, sunlight, nutrients,
-and growing space.
+## Problem Statement
 
-Manual field inspection can be time-consuming,
-especially across large agricultural areas.
+Weeds compete with crops for sunlight, nutrients, water, and growing space. Identifying them early is important for effective agricultural management.
 
-## Proposed Solution
+Traditional manual field inspection can be labor-intensive, time-consuming, and difficult to scale across large agricultural areas.
 
-WeedSpot will explore machine learning approaches
-for identifying weeds from images.
+Computer vision offers a potential approach for supporting more efficient weed monitoring.
 
-Potential application capabilities include:
+## Project Objectives
 
-- Agricultural image upload
-- Weed detection or classification
-- Confidence visualization
-- Detection bounding boxes or segmentation masks
-- Model limitations and uncertainty communication
+- Explore deep learning approaches for agricultural weed identification.
+- Develop and validate an image-based inference workflow.
+- Investigate detection and segmentation capabilities based on available annotations.
+- Visualize predictions and model confidence where supported.
+- Evaluate model performance and identify common failure cases.
+- Prepare the foundation for backend and frontend integration.
+- Document reproducible experiments and technical limitations.
 
-Actual capabilities depend on the validated dataset
-and model selected during experimentation.
+## Development Progress
 
-## Machine Learning Workflow
+| Component | Status | Description |
+|---|---|---|
+| Repository structure | Completed | Standard project scaffold initialized |
+| Problem definition | Completed | Weed identification for agricultural imagery |
+| Dataset provenance | Pending verification | Dataset sources, licenses, and annotation formats require confirmation |
+| Dataset preprocessing | Not verified | Preprocessing results have not yet been documented |
+| Model training | Not verified | Training results and checkpoints require confirmation |
+| Model inference | In progress | Developing and debugging the inference workflow |
+| Model evaluation | Pending | Held-out metrics have not been confirmed |
+| Backend integration | Planned | API-based model inference |
+| Frontend integration | Planned | Interactive visualization of predictions |
+| Documentation | In progress | README and development tracking |
 
-1. Dataset provenance and license verification
-2. Dataset inventory and label audit
-3. Duplicate and leakage investigation
-4. Defensible train/validation/test splitting
-5. Baseline experiments
-6. Model training and validation
-7. Held-out test evaluation
-8. Per-class metrics and error analysis
-9. Model artifact export
-10. Backend and frontend integration
+**Note:** A component marked *Not verified* does not necessarily mean it has not been attempted. It means a reproducible result has not yet been documented.
+
+## Proposed AI Workflow
+
+```text
+Agricultural Image
+        |
+        v
+Image Validation
+        |
+        v
+Preprocessing
+        |
+        v
+Trained Model / Checkpoint
+        |
+        v
+Inference Pipeline
+        |
+        v
+Predicted Classes / Masks / Boxes
+        |
+        v
+Confidence & Visualization
+        |
+        v
+Results and Limitations
+```
+
+The final output format depends on the actual dataset annotations and validated model architecture.
+
+## Machine Learning Methodology
+
+1. **Dataset Audit:** Verify dataset sources, annotation schema, class distributions, duplicates, and licensing.
+2. **Data Preparation:** Perform preprocessing and establish reproducible train/validation/test splits.
+3. **Model Experimentation:** Train and compare appropriate computer vision baselines.
+4. **Validation:** Select the model using validation performance only.
+5. **Inference Development:** Load the selected model, process new images, and generate predictions.
+6. **Evaluation:** Report held-out performance, per-class metrics, and failure cases.
+7. **Application Integration:** Connect the validated inference pipeline to backend and frontend components.
+8. **Documentation:** Record dependencies, limitations, model artifacts, and usage instructions.
+
+## Current Focus: Inference Development
+
+The immediate development priority is completing and verifying the inference pipeline.
+
+### Current Tasks
+
+- [ ] Confirm checkpoint path and model architecture.
+- [ ] Verify model loading without errors.
+- [ ] Confirm input preprocessing matches training.
+- [ ] Validate output tensor shapes and class mappings.
+- [ ] Implement prediction postprocessing.
+- [ ] Produce visual examples from representative images.
+- [ ] Measure inference latency.
+- [ ] Document limitations and failure cases.
+- [ ] Integrate successful inference into the application.
+
+### Definition of Done
+
+Inference development will be considered complete when:
+
+- The intended checkpoint loads successfully.
+- Sample images produce valid predictions.
+- Predictions use the correct class mapping.
+- The output visualization matches the selected task.
+- Inference can be reproduced using documented commands.
+- At least one successful inference example is recorded.
 
 ## Dataset
 
-Dataset selection and label schema are pending verification.
+Dataset provenance and annotation schema remain subject to verification.
 
-The task formulation will be finalized after inspecting
-the source annotations.
+Possible task formulations include image classification, object detection, semantic segmentation, and instance segmentation.
 
-Possible formulations:
-
-- Image classification
-- Object detection
-- Semantic or instance segmentation
-
-These are alternatives, not completed implementations.
+The selected approach must follow the verified labels rather than assumptions about the dataset.
 
 Raw datasets are not committed to this repository.
 
@@ -89,44 +150,33 @@ WeedSpot/
 └── scripts/
 ```
 
-## Current Status
-
-Repository scaffold initialized.
-
-Dataset audit, model experimentation,
-evaluation, and application development are pending.
-
 ## Reproducibility
 
-All future experiments should document:
+Experiments should document dataset versions, license information, access dates, random seeds, preprocessing procedures, data splits, training configurations, validation metrics, and model selection criteria.
 
-- Dataset sources and licenses
-- Dataset versions and access dates
-- Random seeds
-- Splitting strategies
-- Environment dependencies
-- Preprocessing procedures
-- Model hyperparameters
-- Model selection criteria
-- Held-out evaluation results
+The held-out test set must not be used for hyperparameter tuning or champion selection.
 
-## Evaluation Policy
+## Development Roadmap
 
-Model selection must use validation data only.
+- [x] Initialize repository and project documentation.
+- [x] Define the agricultural weed identification problem.
+- [ ] Finalize dataset provenance and preprocessing documentation.
+- [ ] Verify training artifacts and class mappings.
+- [ ] Complete image inference.
+- [ ] Add prediction visualization.
+- [ ] Evaluate the selected model.
+- [ ] Integrate backend inference endpoints.
+- [ ] Develop an interactive frontend.
+- [ ] Add reproducible setup and testing instructions.
+- [ ] Publish a technical project demonstration.
 
-The held-out test set must not be used
-for hyperparameter tuning or champion selection.
+## Limitations
 
-Report per-class performance, failure cases,
-and important limitations.
+WeedSpot is an experimental research and portfolio project.
 
-## Disclaimer
+Performance may vary depending on crop species, image resolution, lighting, camera angle, field conditions, and differences between training and deployment images.
 
-WeedSpot is intended as an experimental
-agricultural decision-support project.
-
-Predictions should not be treated as definitive
-agronomic assessments without field validation.
+Predictions should not be treated as definitive agronomic assessments without appropriate validation.
 
 ## License
 
@@ -134,4 +184,4 @@ See [LICENSE](LICENSE).
 
 ## Author
 
-[MENSTRUE](https://github.com/MENSTRUE)
+Developed by [MENSTRUE](https://github.com/MENSTRUE) as part of the **100 Days of Projects** initiative.
