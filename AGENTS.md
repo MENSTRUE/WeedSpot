@@ -1,471 +1,51 @@
-# AGENTS.md — WeedSpot
+# AGENTS.md — WeedSpot agent operating contract
 
-## 1. Project Identity
+**Scope:** Entire `MENSTRUE/WeedSpot` repository. Source-of-truth priority: (1) executable backend/frontend/notebook code; (2) recorded raw experiment JSON/CSV and original source links; (3) local runtime checks; (4) current documentation; (5) proposals. Read the code before altering claims. Current phase: **working local research prototype / validation and hardening**, not production deployment.
 
-- **Project:** WeedSpot
-- **Day:** 35
-- **Program:** 100 Days of Projects
-- **Domain:** Agriculture / Computer Vision
-- **Primary Goal:** Agricultural weed identification using computer vision and deep learning
-- **Current Phase:** Inference Development & Verification
-- **Project Status:** Work in Progress
+## Invariants
 
-WeedSpot explores the identification of weeds in agricultural imagery to support precision agriculture.
+- Keep `README.md`, `AGENTS.md`, `LICENSE`, `.gitignore`, `.env.example`, `notebooks/`, `models/`, `reports/`, `assets/{plots,examples,screenshots,diagrams}/`, `backend/`, `frontend/`, `docs/`, and `scripts/`.
+- No tracked `datasets/`; no raw images, credentials, archives, generated caches or model binaries in regular Git. Do not rewrite git history or silently remove user work.
+- Never retrain, overwrite or fabricate `models/best.pt` while doing documentation work. Checkpoint is absent from Git by design.
+- For root documents use English-first; maintain **equivalent-depth** `docs/en` and `docs/id` coverage. Component READMEs explain actual code, not aspirational claims.
 
-This document defines mandatory instructions for AI coding agents and contributors working within this repository.
+## Verified before / now / next
 
-**Core Principle:** Prioritize working, reproducible, evidence-based implementations over premature feature expansion.
+**Before:** CWFID 60 + EWIS1 88 paired source images, mask audits, grouping/splits, V3 U-Net experiment and CSV/JSON evaluation. **Now:** FastAPI with strict checkpoint SHA-256 check, React+Vite frontend, local upload and segmentation demonstrated; 3 API contract tests and frontend production build have run successfully in user-provided Windows logs. **Next:** local checksum reproduction and quantitative comparison, inference tiling parity, independent field evaluation, end-to-end tests, licensed distribution review, production threat model.
 
----
+## Dataset and ML rules
 
-## 2. Mandatory Repository Structure
+- Ground sources in `reports/dataset_provenance.json` and original provider terms. CWFID is noncommercial research; do not imply MIT license covers dataset content. EWIS1 license must be separately verified.
+- Class IDs: 0 Background, 1 Crop, 2 Weed. Decode CWFID masks as black/red/green; EWIS1 as transparent/blue/orange. Never combine raw masks without mapping.
+- Group split BEFORE any EWIS1 tiling. `nx,ny=(4,3)` in V3 training executable; twelve tiles per original, never cross train/val/test parents. 60 CWFID and 88 EWIS1 **originals** are different from 1,116 processed image samples.
+- Report CWFID/EWIS1 results separately. Best validation foreground IoU 0.5772258034471679, epoch 32; no tuning on the held-out test. Be explicit about source-site independence and limited test size.
+- Check checkpoint SHA-256 against `reports/experiment_config.json`; use `weights_only=True`, `strict=True`, architecture `UNet(n=24)`, image size 384 and exact ordered classes. Never bypass SHA verification to make a demo succeed.
+- Validate input preprocessing: EXIF transpose, RGB, bilinear RGB resize to 384², `/255`; output argmax and nearest-neighbor resize to original image. Current API does NOT tile whole inference images, which may degrade high-res aerial imagery.
+- Distinguish softmax mean from calibrated reliability, pixel coverage from physical land area, qualitative inference success from measured accuracy. No fabricated examples or metrics.
 
-Preserve the existing root structure:
+## Backend development rules
 
-```text
-WeedSpot/
-├── README.md
-├── AGENTS.md
-├── LICENSE
-├── .gitignore
-├── .env.example
-├── notebooks/
-├── models/
-├── reports/
-├── assets/
-│   ├── plots/
-│   ├── examples/
-│   ├── screenshots/
-│   └── diagrams/
-├── backend/
-├── frontend/
-├── docs/
-└── scripts/
-```
+- Existing REST endpoints: `GET /api/v1/health`, `GET /api/v1/ready`, `POST /api/v1/predict` with multipart field `file`. Do not change contracts silently. Maintain 10 MiB and 16 MP limits and reject unsupported MIME/broken files.
+- `/health` is reachability; readiness is a different contract. Missing/mismatched weights must not silently fall back to random model.
+- Keep error messages informative but avoid user-visible stack traces, credentials and filesystem disclosures in public deployments. Use automated tests and confirm negative cases.
+- Concurrency: preserve model inference lock unless profiling and tests justify a replacement. Do not infer production throughput from single local runs.
+- CORS currently permits local Vite origins only; public deployment requires a security review, auth and rate limiting.
 
-### Repository Constraints
+## Frontend development rules
 
-- Do not rename, remove, or reorganize mandatory directories.
-- Do not create a tracked `datasets/` directory.
-- Use `.gitkeep` for empty mandatory directories.
-- Preserve existing source files unless modifications are required and reviewed.
-- Do not introduce redundant folders or duplicate application implementations.
-- Keep generated caches, temporary files, and large artifacts out of Git.
-- Maintain compatibility with the existing repository architecture.
+- React 19, TypeScript and Vite 6 UI; blue-gray style and accessible upload/interaction. Preserve state handling for chosen file, prediction, loading, errors, compare slider, overlay/mask/original and download.
+- Never display stale prediction from a prior image after selection changes. Disable Analyze if the model is unavailable. Keep PNG/JPEG/WebP and 10 MiB front-end validation in sync with backend.
+- Use `/api` via Vite development proxy; do not hardcode a public backend URL or expose secrets. Build with `npm ci && npm run build`; test user flows as well as compilation.
 
----
+## Documentation, evidence and review checklist
 
-## 3. Current Development State
+- Main README is navigational; detailed paired docs live at `docs/en/*.md` and `docs/id/*.md`.
+- Existing real assets only: `assets/plots/training_results.png`, `assets/examples/{CWFID_test_examples,EWIS1_test_examples,both_datasets_label_audit}.png`. No committed screenshots at last audit. Link via relative Markdown paths and label qualitative examples honestly.
+- When changing code, update architecture, model card, limits, API contract and docs in BOTH languages where relevant. Preserve provenance, report originals and licenses.
+- Before commit: run `python -m pytest -q` in backend, `npm run build` in frontend, verify model-ready/hash and at least one actual image response when possible; check links and `git diff --check`.
+- Commits should be scoped (`docs:`, `fix:`, `feat:`). Review `git status` before staging; never commit `.env`, raw data, checkpoint, node_modules, dist or API tokens.
+- **Definition of Done:** implementation runs, error handling/tests relevant to change pass, metrics are sourced, docs synchronized, provenance recorded, safety limits clear, and no broken references. Unverified items must be labeled unverified rather than marked done.
 
-The repository scaffold and initial project documentation have been established.
+## Prohibited actions
 
-The project is currently focused on implementing, debugging, and verifying model inference.
-
-### Progress Classification
-
-| Component | Status |
-|---|---|
-| Repository scaffold | Completed |
-| Problem definition | Completed |
-| Dataset provenance | Pending verification |
-| Dataset preprocessing | Not verified |
-| Model training | Not verified |
-| Model checkpoint compatibility | Pending verification |
-| Inference pipeline | In progress |
-| Prediction visualization | Pending verification |
-| Held-out evaluation | Pending |
-| Backend integration | Planned |
-| Frontend integration | Planned |
-| Documentation | In progress |
-
-**Important:** Do not interpret *Not verified* as proof that an implementation does not exist. Inspect the repository before making changes.
-
-Never claim model accuracy, inference success, deployment readiness, or completed integration without supporting evidence.
-
----
-
-## 4. Immediate Development Priorities
-
-Prioritize inference completion before introducing additional major features.
-
-### Priority 1 — Repository and Artifact Audit
-
-1. Inspect the existing source code.
-2. Identify actual model architecture and task formulation.
-3. Locate available model checkpoints.
-4. Locate label mappings and preprocessing configuration.
-5. Inspect existing inference implementations.
-6. Determine missing dependencies and integration issues.
-7. Record findings before implementing changes.
-
-Do not assume that a checkpoint exists or that the current model supports segmentation.
-
-### Priority 2 — Model Inference
-
-- [ ] Verify checkpoint existence and integrity.
-- [ ] Confirm model architecture compatibility.
-- [ ] Validate preprocessing against training configuration.
-- [ ] Load model artifacts successfully.
-- [ ] Validate input and output tensor shapes.
-- [ ] Apply task-appropriate postprocessing.
-- [ ] Produce valid predictions on sample inputs.
-- [ ] Add visualization for supported output types.
-- [ ] Handle invalid files and inference errors.
-- [ ] Measure inference latency.
-- [ ] Document inference limitations.
-
-### Priority 3 — Testing and Evaluation
-
-- [ ] Create reproducible inference tests.
-- [ ] Verify class-index mapping.
-- [ ] Check output consistency across repeated inference.
-- [ ] Investigate prediction failures.
-- [ ] Validate model behavior on representative images.
-- [ ] Evaluate using a previously untouched test set, if available.
-- [ ] Report task-appropriate quantitative metrics only when measured.
-
-### Priority 4 — Application Integration
-
-After inference is verified:
-
-1. Integrate the model into the backend.
-2. Implement validated image-upload handling.
-3. Expose prediction results through documented API endpoints.
-4. Integrate frontend prediction visualization.
-5. Provide clear loading, success, and error states.
-6. Add user-facing model limitations.
-7. Test the complete prediction workflow.
-
----
-
-## 5. Dataset Rules
-
-Use credible, task-relevant datasets.
-
-For every dataset, document:
-
-- Original source URL
-- Provider or publisher
-- Dataset version
-- License and usage restrictions
-- Access date
-- Annotation format
-- Class definitions
-- Intended experimental use
-- Known limitations
-
-### Mandatory Data Audit
-
-Before modeling:
-
-1. Inspect directory and annotation schemas.
-2. Validate image references and class labels.
-3. Identify missing and corrupted samples.
-4. Check exact and near-duplicate samples.
-5. Investigate data leakage.
-6. Review class distribution.
-7. Determine defensible train/validation/test splits.
-8. Verify annotation compatibility across datasets.
-
-Do not invent dataset provenance, sample counts, annotation details, labels, or experimental results.
-
-Do not combine datasets with incompatible annotation semantics without a documented conversion and validation process.
-
-Raw datasets must not be committed to Git.
-
----
-
-## 6. Machine Learning Standards
-
-### Reproducibility
-
-All experiments should record:
-
-- Python and library versions
-- Random seeds
-- Dataset references
-- Input image resolution
-- Preprocessing and augmentation
-- Model architecture
-- Hyperparameters
-- Training configuration
-- Validation criteria
-- Model selection procedure
-- Export format and artifact metadata
-
-### Model Selection
-
-- Select models using validation performance only.
-- Do not tune hyperparameters against held-out test performance.
-- Maintain an independent test set.
-- Report class-level results where applicable.
-- Include failure cases and uncertainty.
-- Avoid reporting unsupported performance claims.
-
-### Task-Specific Evaluation
-
-**Classification:** Accuracy, precision, recall, F1-score, confusion matrix.
-
-**Object Detection:** mAP, precision, recall, bounding-box error analysis.
-
-**Segmentation:** IoU, Dice score, per-class segmentation metrics, qualitative masks.
-
-Only report metrics applicable to the verified implementation.
-
----
-
-## 7. Inference Engineering Rules
-
-Inference must use artifacts compatible with the selected model.
-
-### Required Behavior
-
-- Verify checkpoint and configuration availability.
-- Validate image formats and input dimensions.
-- Apply consistent preprocessing.
-- Use correct class mappings.
-- Perform task-specific postprocessing.
-- Avoid fabricated confidence scores.
-- Return meaningful errors.
-- Record actual model-loading failures.
-- Handle CPU/GPU availability gracefully.
-- Document device requirements and limitations.
-
-### Model Loading
-
-Do not silently substitute another checkpoint when loading fails.
-
-Do not claim inference succeeded based on placeholder outputs or randomly generated predictions.
-
-If loading fails:
-
-1. Capture the actual error.
-2. Identify the failing component.
-3. Check model architecture and checkpoint compatibility.
-4. Implement the smallest defensible fix.
-5. Run verification tests.
-6. Document the resolution.
-
----
-
-## 8. Environment and Dependencies
-
-### Development Platform
-
-- Windows 11
-- Python 3.11
-- PowerShell
-- Shared Python AI environment where compatible
-
-Preferred shared interpreter:
-
-```text
-C:\DevEnvs\ai-general\Scripts\python.exe
-```
-
-### Shared Environment Policy
-
-The shared environment may access compatible packages from the global Python installation.
-
-Agents must:
-
-- Inspect installed dependency versions before installation.
-- Avoid unnecessary duplication of large AI frameworks.
-- Never reinstall PyTorch CUDA or TensorFlow without technical justification.
-- Avoid unplanned upgrades to global dependencies.
-- Check compatibility before installing requirements.
-- Use isolated environments for conflicting versions.
-- Preserve reproducibility documentation for other machines.
-
-**Do not assume the shared environment is guaranteed to match every project requirement.**
-
-### Dependency Validation
-
-```powershell
-& "C:\DevEnvs\ai-general\Scripts\python.exe" -m pip check
-```
-
-GPU verification:
-
-```powershell
-& "C:\DevEnvs\ai-general\Scripts\python.exe" -c "import torch; print(torch.cuda.is_available())"
-```
-
-Do not treat CUDA availability as proof that an application model works correctly.
-
----
-
-## 9. Backend Rules
-
-Backend implementations must:
-
-- Load real validated model artifacts.
-- Validate uploaded images.
-- Enforce reasonable file-size limits.
-- Handle unsupported formats.
-- Provide clear error responses.
-- Avoid fabricated inference outputs.
-- Separate model initialization from request handling where appropriate.
-- Document model readiness and runtime limitations.
-- Avoid exposing sensitive filesystem paths or server details.
-
-Do not mark the model as ready unless successful initialization has been verified.
-
----
-
-## 10. Frontend Rules
-
-Frontend implementations must:
-
-- Use real backend responses for predictions.
-- Clearly distinguish loading, success, and error states.
-- Avoid misleading confidence visualization.
-- Display task-appropriate outputs.
-- Remain responsive during inference.
-- Provide usable image-upload interactions.
-- Communicate model limitations.
-- Avoid decorative controls with no functionality.
-
-Do not present mocked prediction results as real AI inference.
-
----
-
-## 11. Testing Requirements
-
-Agents should implement and run relevant tests before reporting completion.
-
-Minimum validation includes:
-
-1. Import and dependency checks.
-2. Model-loading verification.
-3. Image preprocessing checks.
-4. Model inference smoke tests.
-5. Prediction-output validation.
-6. API endpoint tests when backend functionality exists.
-7. Frontend build validation when frontend functionality exists.
-
-If a test cannot be executed, explicitly state why.
-
-**Never mark an unexecuted test as passed.**
-
----
-
-## 12. Git and Security Rules
-
-Never commit:
-
-- Raw datasets
-- Virtual environments
-- `.env` files
-- API keys or credentials
-- Cache directories
-- Temporary training artifacts
-- Large model checkpoints unless explicitly approved
-- Private user data
-
-### Git Workflow
-
-Before committing:
-
-```powershell
-git status --short
-git diff --check
-```
-
-Stage only intended files.
-
-Use meaningful commit messages, such as:
-
-```text
-docs(weedspot): update inference development guidance
-fix(inference): correct model preprocessing pipeline
-test(inference): add prediction validation tests
-feat(api): integrate verified weed inference endpoint
-```
-
-Never claim a feature is completed merely because code has been committed.
-
----
-
-## 13. Documentation and Communication
-
-Prefer technically accurate English documentation with Indonesian support where appropriate.
-
-Every meaningful change should explain:
-
-- What changed
-- Why it changed
-- Files affected
-- Tests executed
-- Known limitations
-- Remaining work
-
-Update `README.md` when project capabilities, setup instructions, or verified development status change.
-
-Do not include fabricated screenshots, metrics, or claims.
-
----
-
-## 14. AI Coding Agent Operating Procedure
-
-For each requested task:
-
-### Step 1 — Inspect
-
-Read relevant files, inspect the current implementation, and identify dependencies.
-
-### Step 2 — Plan
-
-Define the smallest changes needed to achieve the requested outcome.
-
-### Step 3 — Implement
-
-Modify only the necessary files while preserving the repository structure.
-
-### Step 4 — Verify
-
-Run relevant tests and inspect actual results.
-
-### Step 5 — Document
-
-Update documentation and report limitations.
-
-### Step 6 — Report
-
-Provide a concise summary of completed work, tests, blockers, and suggested next steps.
-
-**Do not overwrite functional implementations merely to follow a new proposed architecture.**
-
----
-
-## 15. Definition of Done — Current Milestone
-
-The current inference milestone is complete only when:
-
-- [ ] The intended model checkpoint loads successfully.
-- [ ] Input preprocessing is verified.
-- [ ] Predictions are generated from real model execution.
-- [ ] Class mappings are correct.
-- [ ] Output visualization is valid.
-- [ ] Representative inference examples are saved.
-- [ ] Errors are handled appropriately.
-- [ ] Reproducible execution instructions are documented.
-- [ ] Actual verification results are reported.
-
-Until these conditions are met, the inference milestone remains **In Progress**.
-
----
-
-## 16. Guiding Principles
-
-1. **Evidence over assumptions.**
-2. **Working inference before feature expansion.**
-3. **Reproducibility before performance claims.**
-4. **Real outputs over simulated demonstrations.**
-5. **Compatibility before dependency upgrades.**
-6. **Preserve existing work before refactoring.**
-7. **Measure progress through verified results.**
-
-> Build real AI systems, validate their behavior, document their limitations, and improve incrementally.
-
-**Current Focus: Complete WeedSpot inference before expanding the application.**
+No fictional precision metrics, hidden test-set tuning, unreviewed dataset redistribution, autop-run training or replacement checkpoints, public herbicide-control claims, silent interface breaks, blanket `git add -f`, or changes to model/weights as part of a documentation-only task. See `docs/en/limitations.md` and `docs/id/limitations.md` for safety constraints.
