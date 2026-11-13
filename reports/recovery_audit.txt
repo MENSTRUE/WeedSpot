@@ -1,0 +1,81 @@
+﻿WEEDSPOT RECOVERY AUDIT
+Date: 2026-11-13 10:15:47
+Project: D:\porto\100 day\day 35
+
+=== REPOSITORY FILES ===
+.env.example | 335 bytes
+.gitignore | 1279 bytes
+AGENTS.md | 13846 bytes
+LICENSE | 1101 bytes
+README.md | 7353 bytes
+assets\.gitkeep | 0 bytes
+assets\diagrams\.gitkeep | 0 bytes
+assets\examples\both_datasets_label_audit.png | 1575406 bytes
+assets\examples\CWFID_test_examples.png | 904737 bytes
+assets\examples\EWIS1_test_examples.png | 1219520 bytes
+assets\plots\training_results.png | 78753 bytes
+assets\screenshots\.gitkeep | 0 bytes
+backend\.gitkeep | 0 bytes
+docs\.gitkeep | 0 bytes
+frontend\.gitkeep | 0 bytes
+models\.gitkeep | 0 bytes
+notebooks\.gitkeep | 0 bytes
+reports\.gitkeep | 0 bytes
+reports\artifact_manifest.json | 530 bytes
+reports\dataset_provenance.json | 883 bytes
+reports\evaluation_by_source.json | 1510 bytes
+reports\experiment_config.json | 627 bytes
+reports\mask_audit.json | 455 bytes
+reports\MODEL_CARD.md | 952 bytes
+reports\original_split_manifest.csv | 53107 bytes
+reports\parent_bootstrap_ci.json | 924 bytes
+reports\README.md | 162 bytes
+reports\source_inventory.csv | 28691 bytes
+reports\source_pixel_distribution.csv | 95 bytes
+reports\split_quality.json | 482 bytes
+reports\test_CWFID_confusion.csv | 95 bytes
+reports\test_EWIS1_confusion.csv | 107 bytes
+reports\tile_manifest.csv | 234283 bytes
+reports\training_history.csv | 5617 bytes
+reports\val_CWFID_confusion.csv | 96 bytes
+reports\val_EWIS1_confusion.csv | 105 bytes
+scripts\.gitkeep | 0 bytes
+
+=== MODEL / TRAINING / INFERENCE FILES ===
+D:\porto\100 day\day 35\reports\artifact_manifest.json | 530 bytes
+D:\porto\100 day\day 35\reports\dataset_provenance.json | 883 bytes
+D:\porto\100 day\day 35\reports\evaluation_by_source.json | 1510 bytes
+D:\porto\100 day\day 35\reports\experiment_config.json | 627 bytes
+D:\porto\100 day\day 35\reports\mask_audit.json | 455 bytes
+D:\porto\100 day\day 35\reports\parent_bootstrap_ci.json | 924 bytes
+D:\porto\100 day\day 35\reports\split_quality.json | 482 bytes
+
+=== DATASET REFERENCES ===
+D:\porto\100 day\day 35\AGENTS.md:49: - Do not create a tracked `datasets/` directory.
+D:\porto\100 day\day 35\AGENTS.md:70: | Dataset provenance | Pending verification |
+D:\porto\100 day\day 35\AGENTS.md:71: | Dataset preprocessing | Not verified |
+D:\porto\100 day\day 35\AGENTS.md:141: ## 5. Dataset Rules
+D:\porto\100 day\day 35\AGENTS.md:143: Use credible, task-relevant datasets.
+D:\porto\100 day\day 35\AGENTS.md:145: For every dataset, document:
+D:\porto\100 day\day 35\AGENTS.md:149: - Dataset version
+D:\porto\100 day\day 35\AGENTS.md:168: 8. Verify annotation compatibility across datasets.
+D:\porto\100 day\day 35\AGENTS.md:170: Do not invent dataset provenance, sample counts, annotation details, labels, or experimental results.
+D:\porto\100 day\day 35\AGENTS.md:172: Do not combine datasets with incompatible annotation semantics without a documented conversion and validation process.
+D:\porto\100 day\day 35\AGENTS.md:174: Raw datasets must not be committed to Git.
+D:\porto\100 day\day 35\AGENTS.md:186: - Dataset references
+D:\porto\100 day\day 35\AGENTS.md:357: - Raw datasets
+D:\porto\100 day\day 35\README.md:42: | Dataset provenance | Pending verification | Dataset sources, licenses, and annotation formats require confirmation |
+D:\porto\100 day\day 35\README.md:43: | Dataset preprocessing | Not verified | Preprocessing results have not yet been documented |
+D:\porto\100 day\day 35\README.md:80: The final output format depends on the actual dataset annotations and validated model architecture.
+D:\porto\100 day\day 35\README.md:84: 1. **Dataset Audit:** Verify dataset sources, annotation schema, class distributions, duplicates, and licensing.
+D:\porto\100 day\day 35\README.md:120: ## Dataset
+D:\porto\100 day\day 35\README.md:122: Dataset provenance and annotation schema remain subject to verification.
+D:\porto\100 day\day 35\README.md:126: The selected approach must follow the verified labels rather than assumptions about the dataset.
+D:\porto\100 day\day 35\README.md:128: Raw datasets are not committed to this repository.
+D:\porto\100 day\day 35\README.md:155: Experiments should document dataset versions, license information, access dates, random seeds, preprocessing procedures, data splits, training configurations, validation metrics, and model selection criteria.
+D:\porto\100 day\day 35\README.md:163: - [ ] Finalize dataset provenance and preprocessing documentation.
+
+=== PYTHON STACK ===
+3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+C:\DevEnvs\ai-general\Scripts\python.exe
+
